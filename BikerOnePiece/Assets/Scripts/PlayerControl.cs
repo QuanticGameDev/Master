@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
 
 	public float speed;
+	public Vector3 jumpVelocity;
+	public GameObject slope01Jump;
 
 	Animator _animator;
 
@@ -25,15 +27,41 @@ public class PlayerControl : MonoBehaviour {
 		transform.eulerAngles = new Vector3 (0, 0, transform.eulerAngles.z);
 		rigidbody2D.angularVelocity = 0;
 
-		float input = Input.GetAxis("Vertical");
-		if (input > 0) {
-			rigidbody2D.AddForce (gameObject.transform.up * speed * input);
-			_animator.Play (Animator.StringToHash ("skeletonWalk"));
+		if (isDrive) {
+			float input = Input.GetAxis("Vertical");
+			if (input > 0) {
+				rigidbody2D.AddForce (gameObject.transform.up * speed * input);
+				_animator.Play (Animator.StringToHash ("skeletonWalk"));
+			} else {
+				_animator.Play(Animator.StringToHash("skeletonStand"));
+			}
 		} else {
-			_animator.Play(Animator.StringToHash("skeletonStand"));
+			if(isJumb) {
+				isJumb = false;
+				StartCoroutine(Jumping());
+			}
+
 		}
 
-	
 	}
-	
+
+	bool isJumb = false;
+	bool isDrive = true;
+	void OnTriggerEnter2D(Collider2D col) {
+		if (col.name == slope01Jump.name && !isJumb) {
+			isJumb = true;
+			isDrive = false;
+			rigidbody2D.gravityScale = 4f;
+			jumpVelocity = new Vector3(1f, 1f, 0f);
+		}
+	}
+
+	IEnumerator Jumping() {
+		jumpVelocity += new Vector3(3f, 10f, 0) * Time.deltaTime;
+		//jumpVelocity = Vector3.ClampMagnitude (jumpVelocity, 90f);
+		transform.position += jumpVelocity * Time.deltaTime * speed;
+		yield return new WaitForSeconds (Mathf.Sqrt(speed / 40));
+		rigidbody2D.gravityScale = 0;
+		isDrive = true;
+	}
 }
