@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour {
 
 	public static bool isRun = false;
 	public static bool isFire = false;
-
+	public float rotation = 45f;
 
 	Animator _animator;
 
@@ -43,9 +43,9 @@ public class PlayerControl : MonoBehaviour {
 				_animator.Play(Animator.StringToHash("skeletonStand"));
 			}
 			if (isRight) {
-				transform.Rotate ((Vector3.forward * -45f * Mathf.Sqrt(speed/2)) * Time.deltaTime );
+				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt(speed/2)) * Time.deltaTime );
 			} else if (isLeft) {
-				transform.Rotate ((Vector3.forward * 45f  * Mathf.Sqrt(speed/2)) * Time.deltaTime );
+				transform.Rotate ((Vector3.forward * rotation  * Mathf.Sqrt(speed/2)) * Time.deltaTime );
 			}
 		} else {
 			if(isJumb) {
