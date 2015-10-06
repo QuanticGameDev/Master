@@ -11,6 +11,6 @@ public class EnemyAction : MonoBehaviour {
 		                       (player.transform.position.x - transform.position.x))
 								* Mathf.Rad2Deg - 90;
 		transform.eulerAngles = new Vector3 (0, 0, z);
-		rigidbody2D.AddForce (gameObject.transform.up * speed);
+		GetComponent<Rigidbody2D>().AddForce (gameObject.transform.up * speed);
 	}
 }

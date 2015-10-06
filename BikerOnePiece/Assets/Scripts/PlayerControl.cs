@@ -58,17 +58,16 @@ public class PlayerControl : MonoBehaviour {
 		if (col.name == slope01Jump.name && !isJumb) {
 			isJumb = true;
 			isDrive = false;
-			GetComponent<Rigidbody2D>().gravityScale = 4f;
-			jumpVelocity = new Vector3(1f, 1f, 0f);
+			rigidbody2D.gravityScale = 4f;
+			jumpVelocity = new Vector3(4f, 2f, 0f);
 		}
 	}
 
 	IEnumerator Jumping() {
 		jumpVelocity += new Vector3(3f, 10f, 0) * Time.deltaTime;
-		//jumpVelocity = Vector3.ClampMagnitude (jumpVelocity, 90f);
 		transform.position += jumpVelocity * Time.deltaTime * speed;
-		yield return new WaitForSeconds (Mathf.Sqrt(speed / 40));
-		GetComponent<Rigidbody2D>().gravityScale = 0;
+		yield return new WaitForSeconds (Mathf.Sqrt(speed / 50));
+		rigidbody2D.gravityScale = 0;
 		isDrive = true;
 	}
 }
