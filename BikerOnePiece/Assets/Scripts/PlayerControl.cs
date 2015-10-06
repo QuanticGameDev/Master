@@ -58,7 +58,6 @@ public class PlayerControl : MonoBehaviour {
 
 	IEnumerator Jumping() {
 		jumpVelocity += new Vector3(3f, 10f, 0) * Time.deltaTime;
-		//jumpVelocity = Vector3.ClampMagnitude (jumpVelocity, 90f);
 		transform.position += jumpVelocity * Time.deltaTime * speed;
 		yield return new WaitForSeconds (Mathf.Sqrt(speed / 50));
 		rigidbody2D.gravityScale = 0;
