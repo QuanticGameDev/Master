@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="D:\UnityProject\BikerOnePiece\Assets\Scripts\PlayerControl.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Controller.cs">
     <Files>
-      <File FileName="D:\UnityProject\BikerOnePiece\Assets\Scripts\PlayerControl.cs" Line="56" Column="4" />
+      <File FileName="D:\UnityProject\BikerOnePiece\Assets\Scripts\PlayerControl.cs" Line="23" Column="22" />
+      <File FileName="Assets\Scripts\PlayerControl.cs" Line="27" Column="54" />
+      <File FileName="Assets\Scripts\Controller.cs" Line="9" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

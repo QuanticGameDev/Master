@@ -8,39 +8,44 @@ public class PlayerControl : MonoBehaviour {
 	public Vector3 jumpVelocity;
 	public GameObject slope01Jump;
 
+	public static bool isLeft = false;
+	public static bool isRight = false;
+
+	public static bool isRun = false;
+	public static bool isFire = false;
+
+
 	Animator _animator;
 
 	void Start() {
+		isLeft = false;
+		isRight = false;
+		isRun = false;
+		isFire = false;
 		_animator = GetComponent<Animator> ();	
 	}
 
 	void Update() {
-		if (Input.GetMouseButtonDown (0)) {
-			_animator.SetTrigger("Attack");
-		}
+		//if (Input.GetMouseButtonDown (0)) {
+			//_animator.SetTrigger("Attack");
+		//}
 	}
 
 	void FixedUpdate() {
-//		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-//		Quaternion rot = Quaternion.LookRotation (transform.position - mousePos, Vector3.forward);
-//		transform.rotation = rot;
-//		transform.eulerAngles = new Vector3 (0, 0, transform.eulerAngles.z);
-//		rigidbody2D.angularVelocity = 0;
-
 		if (isDrive) {
-			float inputV = Input.GetAxis("Vertical");
-			float inputH = Input.GetAxis("Horizontal");
+			//float inputV = Input.GetAxis("Vertical");
+			//Debug.Log(inputV);
 //			float input = Input.GetAxis("Vertical");
-			if (inputV > 0) {
-				GetComponent<Rigidbody2D>().AddForce (gameObject.transform.up * speed * inputV);
+			if (isRun ) {
+				GetComponent<Rigidbody2D>().AddForce (gameObject.transform.up * speed * Time.deltaTime * 30);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
 				_animator.Play(Animator.StringToHash("skeletonStand"));
 			}
-			if (inputH > 0) {
-				transform.Rotate ((Vector3.forward * -45) * Time.deltaTime );
-			} else if (inputH < 0) {
-				transform.Rotate ((Vector3.forward * 45) * Time.deltaTime );
+			if (isRight) {
+				transform.Rotate ((Vector3.forward * -45f * Mathf.Sqrt(speed/2)) * Time.deltaTime );
+			} else if (isLeft) {
+				transform.Rotate ((Vector3.forward * 45f  * Mathf.Sqrt(speed/2)) * Time.deltaTime );
 			}
 		} else {
 			if(isJumb) {
