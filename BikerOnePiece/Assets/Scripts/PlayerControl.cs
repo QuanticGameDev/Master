@@ -2,31 +2,31 @@ using UnityEngine;
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
-
-
+	
+	
 	public float speed;
 	public Vector3 jumpVelocity;
-
+	
 	public static bool isLeft = false;
 	public static bool isRight = false;
-
+	
 	public static bool isRun = false;
 	public static bool isFire = false;
 	public float rotation = 45f;
-
+	
 	public GameObject[] bound01;
 	public GameObject[] bound02;
-
+	
 	private Vector3 startPos;
 	private Vector3 targetPos;
-
+	
 	Animator _animator;
-
+	
 	bool isJumb = false;
 	bool isDrive = true;
 	bool isBound = false;
 	string currentSlope = "";
-
+	
 	float currentJumpHeight = 0;
 	void Start() {
 		isLeft = false;
@@ -35,21 +35,21 @@ public class PlayerControl : MonoBehaviour {
 		isFire = false;
 		currentJumpHeight = transform.position.y;
 		jumpStartVelocityY = -jumpDuration * Physics.gravity.y / 2;
-
+		
 		_animator = GetComponent<Animator> ();	
 	}
-
+	
 	void Update() {
 		//if (Input.GetMouseButtonDown (0)) {
-			//_animator.SetTrigger("Attack");
+		//_animator.SetTrigger("Attack");
 		//}
 	}
-
+	
 	void FixedUpdate() {
 		if (isDrive) {
 			//float inputV = Input.GetAxis("Vertical");
 			//Debug.Log(inputV);
-//			float input = Input.GetAxis("Vertical");
+			//			float input = Input.GetAxis("Vertical");
 			if (isRun) {
 				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * speed * Time.deltaTime * 30);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
@@ -60,43 +60,43 @@ public class PlayerControl : MonoBehaviour {
 				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
 			} else if (isLeft) {
 				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
-
+				
 			}
 		} else {
 			if (isJumb) {
 				isJumb = false;
-
+				
 			}
 			
 		}
 	}
-
+	
 	public float jumpDuration = 0.5f;
-	public float jumpDistance = 1f;
-
+	public float jumpDistance = 2f;
+	
 	private bool jumping = false;
 	private float jumpStartVelocityY;
-
+	
 	void OnTriggerEnter2D(Collider2D col) {
 		if (!isJumb) {
 			if (col.name == "Slope01") {
 				//if(transform.eulerAngles.)
 				currentJumpHeight = transform.position.y;
-				Vector3 forwardAndLeft = (transform.forward + transform.right) * jumpDistance * speed / 15f;
+				Vector3 forwardAndLeft = (transform.up + transform.right) * jumpDistance  * speed / 25f;
 				StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
 			}
-
+			
 		}
-
+		
 	}
-
+	
 	void DoJump (GameObject[] bound, Vector3 jumpVel) {
 		isJumb = true;
 		isDrive = false;
 		setTriggerBound(bound, true);
-
+		
 	}
 	
 	void setTriggerBound(GameObject[] bound, bool status) {
@@ -104,7 +104,7 @@ public class PlayerControl : MonoBehaviour {
 			bound[i].GetComponent<BoxCollider2D>().isTrigger = status;
 		}
 	}
-
+	
 	private IEnumerator Jump(Vector3 direction)
 	{
 		jumping = true;
@@ -126,7 +126,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 			
 			Vector3 currentPos = Vector3.Lerp(startPoint, targetPoint, jumpProgress);
-
+			
 			currentPos.y = height;
 			currentPos.z = 21.4f;
 			transform.position = currentPos;
@@ -145,9 +145,9 @@ public class PlayerControl : MonoBehaviour {
 		transform.position = targetPoint;
 		yield break;
 	}
-
+	
 	//IEnumerator Jumping() {
-		/*startPos = transform.position; //Set the start
+	/*startPos = transform.position; //Set the start
 		weight += Time.deltaTime * speed; //amount
 		targetPos = new Vector3(startPos.x + 3f, startPos.y, startPos.z);
 		transform.position = Vector3.Lerp(startPos, 
