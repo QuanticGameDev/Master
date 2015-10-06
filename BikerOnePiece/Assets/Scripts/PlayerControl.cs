@@ -17,13 +17,25 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject[] bound01;
 	public GameObject[] bound02;
 
+	private Vector3 startPos;
+	private Vector3 targetPos;
+
 	Animator _animator;
 
+	bool isJumb = false;
+	bool isDrive = true;
+	bool isBound = false;
+	string currentSlope = "";
+
+	float currentJumpHeight = 0;
 	void Start() {
 		isLeft = false;
 		isRight = false;
 		isRun = false;
 		isFire = false;
+		currentJumpHeight = transform.position.y;
+		jumpStartVelocityY = -jumpDuration * Physics.gravity.y / 2;
+
 		_animator = GetComponent<Animator> ();	
 	}
 
@@ -38,39 +50,42 @@ public class PlayerControl : MonoBehaviour {
 			//float inputV = Input.GetAxis("Vertical");
 			//Debug.Log(inputV);
 //			float input = Input.GetAxis("Vertical");
-			if (isRun ) {
-				GetComponent<Rigidbody2D>().AddForce (gameObject.transform.up * speed * Time.deltaTime * 30);
+			if (isRun) {
+				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * speed * Time.deltaTime * 30);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
-				_animator.Play(Animator.StringToHash("skeletonStand"));
+				_animator.Play (Animator.StringToHash ("skeletonStand"));
 			}
 			if (isRight) {
-				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt(speed/2)) * Time.deltaTime );
+				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
 			} else if (isLeft) {
-				transform.Rotate ((Vector3.forward * rotation  * Mathf.Sqrt(speed/2)) * Time.deltaTime );
+				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
+
 			}
 		} else {
-			if(isJumb) {
+			if (isJumb) {
 				isJumb = false;
-				StartCoroutine(Jumping());
+
 			}
-
+			
 		}
-
 	}
 
-	bool isJumb = false;
-	bool isDrive = true;
-	bool isBound = false;
-	string currentSlope = "";
+	public float jumpDuration = 0.5f;
+	public float jumpDistance = 1f;
+
+	private bool jumping = false;
+	private float jumpStartVelocityY;
+
 	void OnTriggerEnter2D(Collider2D col) {
 		if (!isJumb) {
-
 			if (col.name == "Slope01") {
-				currentSlope = col.name;
-				DoJump (bound01, new Vector3(4f, 2f, 0));
+				//if(transform.eulerAngles.)
+				currentJumpHeight = transform.position.y;
+				Vector3 forwardAndLeft = (transform.forward + transform.right) * jumpDistance * speed / 15f;
+				StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
-				DoJump (bound02, new Vector3(2f, 4f, 0));
+				//DoJump (bound02, new Vector3(2f, 4f, 0));
 			}
 
 		}
@@ -81,26 +96,70 @@ public class PlayerControl : MonoBehaviour {
 		isJumb = true;
 		isDrive = false;
 		setTriggerBound(bound, true);
-		rigidbody2D.gravityScale = 4f;
-		jumpVelocity = jumpVel;
-	}
 
+	}
+	
 	void setTriggerBound(GameObject[] bound, bool status) {
 		for (int i = 0; i < bound.Length; i++) {
 			bound[i].GetComponent<BoxCollider2D>().isTrigger = status;
 		}
 	}
-	IEnumerator Jumping() {
-		jumpVelocity += new Vector3(3f, 10f, 0) * Time.deltaTime;
-		transform.position += jumpVelocity * Time.deltaTime * speed;
+
+	private IEnumerator Jump(Vector3 direction)
+	{
+		jumping = true;
+		Vector3 startPoint = transform.position;
+		Vector3 targetPoint = startPoint + direction;
+		float time = 0;
+		float jumpProgress = 0;
+		float velocityY = jumpStartVelocityY;
+		float height = startPoint.y;
+		
+		while (jumping)
+		{
+			jumpProgress = time / jumpDuration;
+			
+			if (jumpProgress > 1)
+			{
+				jumping = false;
+				jumpProgress = 1;
+			}
+			
+			Vector3 currentPos = Vector3.Lerp(startPoint, targetPoint, jumpProgress);
+
+			currentPos.y = height;
+			currentPos.z = 21.4f;
+			transform.position = currentPos;
+			
+			//Wait until next frame.
+			yield return null;
+			
+			height += velocityY * Time.deltaTime;
+			velocityY += Time.deltaTime * Physics.gravity.y;
+			time += Time.deltaTime;
+		}
+		targetPoint.z = 21.4f;
+		if(targetPoint.y < currentJumpHeight) {
+			targetPoint = new Vector3(targetPoint.x, currentJumpHeight, targetPoint.z);
+		}
+		transform.position = targetPoint;
+		yield break;
+	}
+
+	//IEnumerator Jumping() {
+		/*startPos = transform.position; //Set the start
+		weight += Time.deltaTime * speed; //amount
+		targetPos = new Vector3(startPos.x + 3f, startPos.y, startPos.z);
+		transform.position = Vector3.Lerp(startPos, 
+		                                  targetPos, weight);
 		yield return new WaitForSeconds (Mathf.Sqrt(speed / 500f));
-		rigidbody2D.gravityScale = 0;
+		//rigidbody2D.gravityScale = 0;
 		isDrive = true;
 		switch (currentSlope) {
 			case "Slope01" :
 
 				setTriggerBound(bound01, false);
 				break;
-		}
-	}
+		}*/
+	//}
 }
