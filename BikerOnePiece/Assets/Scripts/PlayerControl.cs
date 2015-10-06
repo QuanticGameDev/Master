@@ -52,7 +52,7 @@ public class PlayerControl : MonoBehaviour {
 			isJumb = true;
 			isDrive = false;
 			rigidbody2D.gravityScale = 4f;
-			jumpVelocity = new Vector3(1f, 1f, 0f);
+			jumpVelocity = new Vector3(4f, 2f, 0f);
 		}
 	}
 
