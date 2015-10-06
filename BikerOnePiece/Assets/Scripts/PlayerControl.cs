@@ -51,7 +51,7 @@ public class PlayerControl : MonoBehaviour {
 			//Debug.Log(inputV);
 			//			float input = Input.GetAxis("Vertical");
 			if (isRun) {
-				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * speed * Time.deltaTime * 30);
+				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * speed * Time.deltaTime * 60);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
 				_animator.Play (Animator.StringToHash ("skeletonStand"));
