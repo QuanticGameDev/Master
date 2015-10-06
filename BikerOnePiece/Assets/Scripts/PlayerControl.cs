@@ -21,19 +21,26 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		Quaternion rot = Quaternion.LookRotation (transform.position - mousePos, Vector3.forward);
-		transform.rotation = rot;
-		transform.eulerAngles = new Vector3 (0, 0, transform.eulerAngles.z);
-		rigidbody2D.angularVelocity = 0;
+//		Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//		Quaternion rot = Quaternion.LookRotation (transform.position - mousePos, Vector3.forward);
+//		transform.rotation = rot;
+//		transform.eulerAngles = new Vector3 (0, 0, transform.eulerAngles.z);
+//		rigidbody2D.angularVelocity = 0;
 
 		if (isDrive) {
-			float input = Input.GetAxis("Vertical");
-			if (input > 0) {
-				rigidbody2D.AddForce (gameObject.transform.up * speed * input);
+			float inputV = Input.GetAxis("Vertical");
+			float inputH = Input.GetAxis("Horizontal");
+//			float input = Input.GetAxis("Vertical");
+			if (inputV > 0) {
+				GetComponent<Rigidbody2D>().AddForce (gameObject.transform.up * speed * inputV);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
 				_animator.Play(Animator.StringToHash("skeletonStand"));
+			}
+			if (inputH > 0) {
+				transform.Rotate ((Vector3.forward * -45) * Time.deltaTime );
+			} else if (inputH < 0) {
+				transform.Rotate ((Vector3.forward * 45) * Time.deltaTime );
 			}
 		} else {
 			if(isJumb) {
@@ -51,7 +58,7 @@ public class PlayerControl : MonoBehaviour {
 		if (col.name == slope01Jump.name && !isJumb) {
 			isJumb = true;
 			isDrive = false;
-			rigidbody2D.gravityScale = 4f;
+			GetComponent<Rigidbody2D>().gravityScale = 4f;
 			jumpVelocity = new Vector3(1f, 1f, 0f);
 		}
 	}
@@ -61,7 +68,7 @@ public class PlayerControl : MonoBehaviour {
 		//jumpVelocity = Vector3.ClampMagnitude (jumpVelocity, 90f);
 		transform.position += jumpVelocity * Time.deltaTime * speed;
 		yield return new WaitForSeconds (Mathf.Sqrt(speed / 40));
-		rigidbody2D.gravityScale = 0;
+		GetComponent<Rigidbody2D>().gravityScale = 0;
 		isDrive = true;
 	}
 }
