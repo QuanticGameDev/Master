@@ -31,6 +31,7 @@ public class Controller : MonoBehaviour {
 
 	public void fireOn() {
 		PlayerControl.isFire = true;
+		Application.LoadLevel (0);
 	}
 	
 	public void fireOff() {
