@@ -32,8 +32,15 @@ public class PlayerControl : MonoBehaviour {
 		} else {
 			_animator.Play(Animator.StringToHash("skeletonStand"));
 		}
-
-	
 	}
 	
+	void OnTriggerEnter2D(Collider2D col) {
+		if(col.name.IndexOf("Slope") >= 0)
+			transform.Translate(Vector3.up * 100 * Time.deltaTime, Space.World);
+	}
+
+	void OnTriggerExit2D(Collider2D col) {
+		if(col.name.IndexOf("Slope") >= 0)
+			rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+	}
 }
