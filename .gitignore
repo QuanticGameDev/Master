@@ -60,6 +60,3 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# Windows shortcuts
-*.lnk
-BikerOnePiece/Assets/Scripts/PlayerControl.cs
