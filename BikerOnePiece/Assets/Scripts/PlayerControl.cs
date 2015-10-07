@@ -72,7 +72,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 	
 	public float jumpDuration = 0.5f;
-	public float jumpDistance = 2f;
+	public float jumpDistance = 6f;
 	
 	private bool jumping = false;
 	private float jumpStartVelocityY;
@@ -82,7 +82,7 @@ public class PlayerControl : MonoBehaviour {
 			if (col.name == "Slope01") {
 				//if(transform.eulerAngles.)
 				currentJumpHeight = transform.position.y;
-				Vector3 forwardAndLeft = (transform.up + transform.right) * jumpDistance  * speed / 25f;
+				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * speed / 20f; 
 				StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
@@ -114,7 +114,8 @@ public class PlayerControl : MonoBehaviour {
 		float jumpProgress = 0;
 		float velocityY = jumpStartVelocityY;
 		float height = startPoint.y;
-		
+
+
 		while (jumping)
 		{
 			jumpProgress = time / jumpDuration;
@@ -128,17 +129,19 @@ public class PlayerControl : MonoBehaviour {
 			Vector3 currentPos = Vector3.Lerp(startPoint, targetPoint, jumpProgress);
 			
 			currentPos.y = height;
+			//currentPos.x += speed * 10f * Time.deltaTime;
 			currentPos.z = 21.4f;
 			transform.position = currentPos;
 			
 			//Wait until next frame.
 			yield return null;
 			
-			height += velocityY * Time.deltaTime;
+			height += velocityY * Time.deltaTime * speed / 4f;
 			velocityY += Time.deltaTime * Physics.gravity.y;
 			time += Time.deltaTime;
 		}
 		targetPoint.z = 21.4f;
+
 		if(targetPoint.y < currentJumpHeight) {
 			targetPoint = new Vector3(targetPoint.x, currentJumpHeight, targetPoint.z);
 		}
