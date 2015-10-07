@@ -58,7 +58,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 			if (currentSpeed > 0) {
 				currentSpeed --;
-				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 30);
+				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 25f);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
 				_animator.Play (Animator.StringToHash ("skeletonStand"));
