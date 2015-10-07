@@ -4,7 +4,9 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour {
 	
 	
-	public float speed;
+	public float maxSpeed;
+	private float currentSpeed;
+	private float rotateSpeed;
 	public Vector3 jumpVelocity;
 	
 	public static bool isLeft = false;
@@ -50,16 +52,30 @@ public class PlayerControl : MonoBehaviour {
 			//float inputV = Input.GetAxis("Vertical");
 			//Debug.Log(inputV);
 			//			float input = Input.GetAxis("Vertical");
-			if (isRun) {
-				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * speed * Time.deltaTime * 60);
+			if(isRun)
+			{
+				if(currentSpeed < maxSpeed)
+					currentSpeed += 1.5f;
+			}
+			if (currentSpeed > 0) {
+				currentSpeed --;
+				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 30);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
 				_animator.Play (Animator.StringToHash ("skeletonStand"));
 			}
+			if(currentSpeed == 0)
+			{
+				rotateSpeed = 1;
+			}
+			else
+			{
+				rotateSpeed = currentSpeed;
+			}
 			if (isRight) {
-				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
+				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
 			} else if (isLeft) {
-				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
+				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
 				
 			}
 		} else {
@@ -80,9 +96,8 @@ public class PlayerControl : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col) {
 		if (!isJumb) {
 			if (col.name == "Slope01") {
-				//if(transform.eulerAngles.)
 				currentJumpHeight = transform.position.y;
-				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * speed / 20f; 
+				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * currentSpeed / 30f; 
 				StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
@@ -136,15 +151,12 @@ public class PlayerControl : MonoBehaviour {
 			//Wait until next frame.
 			yield return null;
 			
-			height += velocityY * Time.deltaTime * speed / 4f;
+			height += velocityY * Time.deltaTime * currentSpeed / 5f;
 			velocityY += Time.deltaTime * Physics.gravity.y;
 			time += Time.deltaTime;
 		}
 		targetPoint.z = 21.4f;
-
-		if(targetPoint.y < currentJumpHeight) {
-			targetPoint = new Vector3(targetPoint.x, currentJumpHeight, targetPoint.z);
-		}
+		
 		transform.position = targetPoint;
 		yield break;
 	}
