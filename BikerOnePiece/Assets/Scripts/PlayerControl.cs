@@ -30,12 +30,15 @@ public class PlayerControl : MonoBehaviour {
 	string currentSlope = "";
 	
 	float currentJumpHeight = 0;
+
+	public float marginX = 20f;
+	public float marginY = 2f;
+
 	void Start() {
 		isLeft = false;
 		isRight = false;
 		isRun = false;
 		isFire = false;
-		currentJumpHeight = transform.position.y;
 		jumpStartVelocityY = -jumpDuration * Physics.gravity.y / 2;
 		
 		_animator = GetComponent<Animator> ();	
@@ -48,41 +51,30 @@ public class PlayerControl : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		if (isDrive) {
-			//float inputV = Input.GetAxis("Vertical");
-			//Debug.Log(inputV);
-			//			float input = Input.GetAxis("Vertical");
-			if(isRun)
-			{
-				if(currentSpeed < maxSpeed)
-					currentSpeed += 1.5f;
-			}
-			if (currentSpeed > 0) {
-				currentSpeed --;
-				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 30);
-				_animator.Play (Animator.StringToHash ("skeletonWalk"));
-			} else {
-				_animator.Play (Animator.StringToHash ("skeletonStand"));
-			}
-			if(currentSpeed == 0)
-			{
-				rotateSpeed = 1;
-			}
-			else
-			{
-				rotateSpeed = currentSpeed;
-			}
-			if (isRight) {
-				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
-			} else if (isLeft) {
-				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
-				
-			}
+		if(isRun)
+		{
+			if(currentSpeed < maxSpeed)
+				currentSpeed += 1.5f;
+		}
+		if (currentSpeed > 0) {
+			currentSpeed --;
+			GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 30);
+			_animator.Play (Animator.StringToHash ("skeletonWalk"));
 		} else {
-			if (isJumb) {
-				isJumb = false;
-				
-			}
+			_animator.Play (Animator.StringToHash ("skeletonStand"));
+		}
+		if(currentSpeed == 0)
+		{
+			rotateSpeed = 1;
+		}
+		else
+		{
+			//rotateSpeed = currentSpeed;
+		}
+		if (isRight) {
+			transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
+		} else if (isLeft) {
+			transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
 			
 		}
 	}
@@ -92,13 +84,11 @@ public class PlayerControl : MonoBehaviour {
 	
 	private bool jumping = false;
 	private float jumpStartVelocityY;
-	private float currentJumpWidth = 0;
+
 	void OnTriggerEnter2D(Collider2D col) {
 		if (!isJumb) {
 			if (col.name == "Slope01") {
-				currentJumpHeight = transform.position.y;
-				currentJumpWidth = transform.position.x;
-				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * currentSpeed / 5f; 
+				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * currentSpeed / marginX; 
 				StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
@@ -106,6 +96,16 @@ public class PlayerControl : MonoBehaviour {
 			
 		}
 		
+	}
+
+	void OnTriggerStay2D(Collider2D col) {
+		if(col.name == "MaxSpeedBig") {
+			currentSpeed += 2.2f;
+			Debug.Log(currentSpeed);
+		} else if(col.name == "MaxSpeedSmall") {
+			currentSpeed += 1f;
+			Debug.Log(currentSpeed);
+		}
 	}
 	
 	void DoJump (GameObject[] bound, Vector3 jumpVel) {
@@ -152,7 +152,7 @@ public class PlayerControl : MonoBehaviour {
 			//Wait until next frame.
 			yield return null;
 			
-			height += velocityY * Time.deltaTime * (currentSpeed / 2.0f);
+			height += velocityY * Time.deltaTime * (currentSpeed / marginY);
 			velocityY += Time.deltaTime * Physics.gravity.y;
 			time += Time.deltaTime;
 		}
