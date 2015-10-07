@@ -92,12 +92,13 @@ public class PlayerControl : MonoBehaviour {
 	
 	private bool jumping = false;
 	private float jumpStartVelocityY;
-	
+	private float currentJumpWidth = 0;
 	void OnTriggerEnter2D(Collider2D col) {
 		if (!isJumb) {
 			if (col.name == "Slope01") {
 				currentJumpHeight = transform.position.y;
-				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * currentSpeed / 10f; 
+				currentJumpWidth = transform.position.x;
+				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * currentSpeed / 5f; 
 				StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
@@ -143,7 +144,6 @@ public class PlayerControl : MonoBehaviour {
 			
 			Vector3 currentPos = Vector3.Lerp(startPoint, targetPoint, jumpProgress);
 
-
 			currentPos.y = height;
 			//currentPos.x += speed * 10f * Time.deltaTime;
 			currentPos.z = 21.4f;
@@ -152,12 +152,15 @@ public class PlayerControl : MonoBehaviour {
 			//Wait until next frame.
 			yield return null;
 			
-			height += velocityY * Time.deltaTime * currentSpeed / 2f;
+			height += velocityY * Time.deltaTime * (currentSpeed / 2.0f);
 			velocityY += Time.deltaTime * Physics.gravity.y;
 			time += Time.deltaTime;
 		}
 		targetPoint.z = 21.4f;
-		
+		float maxHeight = startPoint.y + (Mathf.Tan (Mathf.PI / 9) * (targetPoint.x - startPoint.x));
+		if(targetPoint.y < maxHeight)
+		//if(targetPoint.y < currentJumpHeight)
+			targetPoint = new Vector3(targetPoint.x, maxHeight, targetPoint.z);
 		transform.position = targetPoint;
 		yield break;
 	}
