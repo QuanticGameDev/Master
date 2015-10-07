@@ -4,7 +4,9 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour {
 	
 	
-	public float speed;
+	public float maxSpeed;
+	private float currentSpeed;
+	private float rotateSpeed;
 	public Vector3 jumpVelocity;
 	
 	public static bool isLeft = false;
@@ -50,16 +52,29 @@ public class PlayerControl : MonoBehaviour {
 			//float inputV = Input.GetAxis("Vertical");
 			//Debug.Log(inputV);
 			//			float input = Input.GetAxis("Vertical");
-			if (isRun) {
-				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * speed * Time.deltaTime * 30);
+			if(isRun)
+			{
+				currentSpeed += 2;
+			}
+			if (currentSpeed > 0) {
+				currentSpeed --;
+				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 30);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
 				_animator.Play (Animator.StringToHash ("skeletonStand"));
 			}
+			if(currentSpeed == 0)
+			{
+				rotateSpeed = 1;
+			}
+			else
+			{
+				rotateSpeed = currentSpeed;
+			}
 			if (isRight) {
-				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
+				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
 			} else if (isLeft) {
-				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (speed / 2)) * Time.deltaTime);
+				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
 				
 			}
 		} else {
@@ -82,7 +97,7 @@ public class PlayerControl : MonoBehaviour {
 			if (col.name == "Slope01") {
 				//if(transform.eulerAngles.)
 				currentJumpHeight = transform.position.y;
-				Vector3 forwardAndLeft = (transform.up + transform.right) * jumpDistance  * speed / 25f;
+				Vector3 forwardAndLeft = (transform.up + transform.right) * jumpDistance  * currentSpeed / 50f;
 				StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
