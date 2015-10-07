@@ -33,6 +33,7 @@ public class PlayerControl : MonoBehaviour {
 
 	public float marginX = 20f;
 	public float marginY = 2f;
+	public float rad = 9f;
 
 	void Start() {
 		isLeft = false;
@@ -72,9 +73,9 @@ public class PlayerControl : MonoBehaviour {
 			//rotateSpeed = currentSpeed;
 		}
 		if (isRight) {
-			transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
+			transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (20)) * Time.deltaTime);
 		} else if (isLeft) {
-			transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
+			transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (20)) * Time.deltaTime);
 			
 		}
 	}
@@ -145,7 +146,6 @@ public class PlayerControl : MonoBehaviour {
 			Vector3 currentPos = Vector3.Lerp(startPoint, targetPoint, jumpProgress);
 
 			currentPos.y = height;
-			//currentPos.x += speed * 10f * Time.deltaTime;
 			currentPos.z = 21.4f;
 			transform.position = currentPos;
 			
@@ -157,28 +157,17 @@ public class PlayerControl : MonoBehaviour {
 			time += Time.deltaTime;
 		}
 		targetPoint.z = 21.4f;
-		float maxHeight = startPoint.y + (Mathf.Tan (Mathf.PI / 9) * (targetPoint.x - startPoint.x));
+		float maxHeight = startPoint.y + (Mathf.Tan (Mathf.PI / rad) * (targetPoint.x - startPoint.x));
 		if(targetPoint.y < maxHeight)
 		//if(targetPoint.y < currentJumpHeight)
 			targetPoint = new Vector3(targetPoint.x, maxHeight, targetPoint.z);
-		transform.position = targetPoint;
+		//transform.position = targetPoint;
+		StartCoroutine (setJumb (targetPoint));
 		yield break;
 	}
 	
-	//IEnumerator Jumping() {
-	/*startPos = transform.position; //Set the start
-		weight += Time.deltaTime * speed; //amount
-		targetPos = new Vector3(startPos.x + 3f, startPos.y, startPos.z);
-		transform.position = Vector3.Lerp(startPos, 
-		                                  targetPos, weight);
-		yield return new WaitForSeconds (Mathf.Sqrt(speed / 500f));
-		//rigidbody2D.gravityScale = 0;
-		isDrive = true;
-		switch (currentSlope) {
-			case "Slope01" :
-
-				setTriggerBound(bound01, false);
-				break;
-		}*/
-	//}
+	IEnumerator setJumb(Vector3 targetPoint) {
+		yield return new WaitForSeconds (0.016f);
+		transform.position = targetPoint;
+	}
 }
