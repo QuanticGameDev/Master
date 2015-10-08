@@ -56,7 +56,6 @@ public class PlayerControl : MonoBehaviour {
 			if(transform.position.y > startPos.y + currentSpeed/100)
 			{
 				isUp = true;
-				Debug.Log (0);
 			}
 			timecounter += Time.deltaTime * 2.0f;
 			float x = Mathf.Cos (timecounter) * currentSpeed/15;
@@ -142,10 +141,10 @@ public class PlayerControl : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D col) {
 		if(col.name == "MaxSpeedBig") {
-			currentSpeed += 2.2f;
+			currentSpeed += 2f;
 			Debug.Log(currentSpeed);
 		} else if(col.name == "MaxSpeedSmall") {
-			currentSpeed += 1f;
+			currentSpeed += 2f;
 			Debug.Log(currentSpeed);
 		}
 	}
