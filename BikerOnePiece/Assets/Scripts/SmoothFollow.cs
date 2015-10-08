@@ -5,7 +5,7 @@ using System.Collections;
 
 public class SmoothFollow : MonoBehaviour
 {
-	public Transform target;
+	private Transform target;
 	public float smoothDampTime = 0.2f;
 	[HideInInspector]
 	public new Transform transform;
@@ -23,6 +23,7 @@ public class SmoothFollow : MonoBehaviour
 	
 	void Start()
 	{
+		target = GameObject.FindGameObjectWithTag("Player").transform;
 		transform = gameObject.transform;
 		_playerController = target.GetComponent<CharacterController2D>();
 	}

@@ -3,7 +3,11 @@ using System.Collections;
 
 public class Controller : MonoBehaviour {
 
-	public GameObject player;
+	private GameObject player;
+
+	void Start() {
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
 
 	public void leftOn() {
 		PlayerControl.isLeft = true;

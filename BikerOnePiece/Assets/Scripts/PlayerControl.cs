@@ -40,6 +40,7 @@ public class PlayerControl : MonoBehaviour {
 		isRight = false;
 		isRun = false;
 		isFire = false;
+		isJump = false;
 		jumpStartVelocityY = -jumpDuration * Physics.gravity.y / 2;
 		_animator = GetComponent<Animator> ();
 		
@@ -86,21 +87,23 @@ public class PlayerControl : MonoBehaviour {
 					Debug.Log (3);
 				}
 			}
-		} else {
+		} else 
 			if (isRun) {
 				if (currentSpeed < maxSpeed)
 					currentSpeed += 1.5f;
 			}
 			else
 			{
-				currentSpeed -= 1;
+				if(currentSpeed > 0)
+					currentSpeed -= 1;
 			}
 			if (currentSpeed > 0) {
 				
-				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 30);
-				_animator.Play (Animator.StringToHash ("skeletonWalk"));
+				GetComponent<Rigidbody2D> ().AddForce (-transform.right * currentSpeed * Time.deltaTime * 30);
+				//_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
-				_animator.Play (Animator.StringToHash ("skeletonStand"));
+				//_animator.Play (Animator.StringToHash ("skeletonStand"));
+				isJump = false;
 			}
 			if (currentSpeed == 0) {
 				rotateSpeed = 1;
@@ -108,12 +111,21 @@ public class PlayerControl : MonoBehaviour {
 				//rotateSpeed = currentSpeed;
 			}
 			if (isRight) {
-				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (20)) * Time.deltaTime);
+				Vector3 rot = (Vector3.back * -rotation * Mathf.Sqrt (20)) * Time.deltaTime;
+				
+				transform.Rotate (rot);
+				
+				//Vector3 playerRot = transform.localRotation.eulerAngles;
+				//if(playerRot.z >= 60 && playerRot.z <= 90 ) {
+					//if(playerRot.y >= 180.0) {
+						//transform.localRotation = Quaternion.Euler(new Vector3(playerRot.x, 0, playerRot.z));
+					//}
+					//else transform.localRotation = Quaternion.Euler(new Vector3(playerRot.x, 180, playerRot.z));
+				//}
 			} else if (isLeft) {
-				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (20)) * Time.deltaTime);
+				transform.Rotate ((Vector3.back * rotation * Mathf.Sqrt (20)) * Time.deltaTime);
 				
 			}
-		}
 	}
 	
 	public float jumpDuration = 0.5f;
@@ -211,4 +223,3 @@ public class PlayerControl : MonoBehaviour {
 		transform.position = targetPoint;
 	}
 }
-
