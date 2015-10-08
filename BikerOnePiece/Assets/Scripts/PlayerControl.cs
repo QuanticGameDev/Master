@@ -115,13 +115,16 @@ public class PlayerControl : MonoBehaviour {
 				
 				transform.Rotate (rot);
 				
-				//Vector3 playerRot = transform.localRotation.eulerAngles;
-				//if(playerRot.z >= 60 && playerRot.z <= 90 ) {
-					//if(playerRot.y >= 180.0) {
-						//transform.localRotation = Quaternion.Euler(new Vector3(playerRot.x, 0, playerRot.z));
-					//}
-					//else transform.localRotation = Quaternion.Euler(new Vector3(playerRot.x, 180, playerRot.z));
-				//}
+				Vector3 playerRot = transform.localRotation.eulerAngles;
+				if((playerRot.z >= 0 && playerRot.z <= 60) ||
+			  		 (playerRot.z >= 120 && playerRot.z <= 180) ||
+			   			(playerRot.z >= 240 && playerRot.z <= 300)) {
+					transform.localRotation = Quaternion.Euler(new Vector3(playerRot.x, 180, playerRot.z));
+				} else if((playerRot.z >= 60 && playerRot.z <= 120) ||
+				          (playerRot.z >= 180 && playerRot.z <= 240) || 
+			         		 (playerRot.z >= 300 && playerRot.z <= 360)) {
+					transform.localRotation = Quaternion.Euler(new Vector3(playerRot.x, 0, playerRot.z));
+				}
 			} else if (isLeft) {
 				transform.Rotate ((Vector3.back * rotation * Mathf.Sqrt (20)) * Time.deltaTime);
 				
