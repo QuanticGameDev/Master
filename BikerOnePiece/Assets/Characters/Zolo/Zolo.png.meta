@@ -1,0 +1,443 @@
+fileFormatVersion: 2
+guid: 4bc10851c43520b4895802ef7dfc317c
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Zolo_0
+    21300002: Zolo_1
+    21300004: Zolo_2
+    21300006: Zolo_3
+    21300008: Zolo_4
+    21300010: Zolo_5
+    21300012: Zolo_6
+    21300014: Zolo_7
+    21300016: Zolo_8
+    21300018: Zolo_9
+    21300020: Zolo_10
+    21300022: Zolo_11
+    21300024: Zolo_12
+    21300026: Zolo_13
+    21300028: Zolo_14
+    21300030: Zolo_15
+    21300032: Zolo_16
+    21300034: Zolo_17
+    21300036: Zolo_18
+    21300038: Zolo_19
+    21300040: Zolo_20
+    21300042: Zolo_21
+    21300044: Zolo_22
+    21300046: Zolo_23
+    21300048: Zolo_24
+    21300050: Zolo_25
+    21300052: Zolo_26
+    21300054: Zolo_27
+    21300056: Zolo_28
+    21300058: Zolo_29
+    21300060: Zolo_30
+    21300062: Zolo_31
+    21300064: Zolo_32
+    21300066: Zolo_33
+    21300068: Zolo_34
+    21300070: Zolo_35
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Zolo_0
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 494
+        width: 31
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 494
+        width: 28
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 494
+        width: 28
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_3
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 494
+        width: 31
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_4
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 494
+        width: 31
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_5
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 494
+        width: 31
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_6
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 431
+        width: 31
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_7
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 431
+        width: 31
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 372
+        width: 50
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_9
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 372
+        width: 35
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_10
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 372
+        width: 44
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_11
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 372
+        width: 46
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_12
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 372
+        width: 64
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_13
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 311
+        width: 61
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_14
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 311
+        width: 37
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_15
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 311
+        width: 37
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_16
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 311
+        width: 46
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_17
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 311
+        width: 69
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_18
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 260
+        width: 93
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_19
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 260
+        width: 61
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_20
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 260
+        width: 48
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_21
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 203
+        width: 61
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_22
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 203
+        width: 47
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_23
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 203
+        width: 49
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_24
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 203
+        width: 66
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_25
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 138
+        width: 52
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_26
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 138
+        width: 67
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_27
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 138
+        width: 49
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_28
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 138
+        width: 48
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_29
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 69
+        width: 41
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_30
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 68
+        width: 41
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_31
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 69
+        width: 41
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_32
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 69
+        width: 40
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_33
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 0
+        width: 35
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_34
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 1
+        width: 22
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Zolo_35
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 0
+        width: 164
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
