@@ -32,11 +32,9 @@ public class PlayerControl : MonoBehaviour {
 	string currentSlope = "";
 	
 	float currentJumpHeight = 0;
-	
 	public float marginX = 20f;
 	public float marginY = 2f;
 	public float rad = 9f;
-	
 	void Start() {
 		isLeft = false;
 		isRight = false;
@@ -124,7 +122,6 @@ public class PlayerControl : MonoBehaviour {
 	
 	private bool jumping = false;
 	private float jumpStartVelocityY;
-	
 	void OnTriggerEnter2D(Collider2D col) {
 		if (!isJump) {
 			if (col.name == "Slope01") {
@@ -133,6 +130,8 @@ public class PlayerControl : MonoBehaviour {
 				jumpCenter = transform.position;
 				startPos = transform.position;
 				isJump = true;
+				//Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * currentSpeed / marginX; 
+				//StartCoroutine(Jump(forwardAndLeft));
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
 			}
@@ -140,7 +139,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 		
 	}
-	
+
 	void OnTriggerStay2D(Collider2D col) {
 		if(col.name == "MaxSpeedBig") {
 			currentSpeed += 2.2f;
@@ -213,3 +212,4 @@ public class PlayerControl : MonoBehaviour {
 		transform.position = targetPoint;
 	}
 }
+
