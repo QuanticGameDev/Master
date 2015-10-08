@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour {
 	private float currentSpeed;
 	private float rotateSpeed;
 	public Vector3 jumpVelocity;
+	public Vector3 jumpCenter;
 	
 	public static bool isLeft = false;
 	public static bool isRight = false;
@@ -23,22 +24,27 @@ public class PlayerControl : MonoBehaviour {
 	private Vector3 targetPos;
 	
 	Animator _animator;
-	
-	bool isJumb = false;
+	bool isFirst = true;
+	bool isUp = false;
+	bool isJump = false;
 	bool isDrive = true;
 	bool isBound = false;
 	string currentSlope = "";
 	
 	float currentJumpHeight = 0;
+	
+	public float marginX = 20f;
+	public float marginY = 2f;
+	public float rad = 9f;
+	
 	void Start() {
 		isLeft = false;
 		isRight = false;
 		isRun = false;
 		isFire = false;
-		currentJumpHeight = transform.position.y;
 		jumpStartVelocityY = -jumpDuration * Physics.gravity.y / 2;
+		_animator = GetComponent<Animator> ();
 		
-		_animator = GetComponent<Animator> ();	
 	}
 	
 	void Update() {
@@ -46,44 +52,70 @@ public class PlayerControl : MonoBehaviour {
 		//_animator.SetTrigger("Attack");
 		//}
 	}
-	
+	float timecounter = 10.0f;
 	void FixedUpdate() {
-		if (isDrive) {
-			//float inputV = Input.GetAxis("Vertical");
-			//Debug.Log(inputV);
-			//			float input = Input.GetAxis("Vertical");
-			if(isRun)
+		if (isJump) {
+			if(transform.position.y > startPos.y + currentSpeed/100)
 			{
-				if(currentSpeed < maxSpeed)
+				isUp = true;
+				Debug.Log (0);
+			}
+			timecounter += Time.deltaTime * 2.0f;
+			float x = Mathf.Cos (timecounter) * currentSpeed/15;
+			float y = -Mathf.Sin (timecounter) * currentSpeed/10;
+			if (isFirst == true) {
+				jumpCenter = jumpCenter - new Vector3 (x, y, 0.0f);
+				isFirst = false;
+			}
+			transform.position = jumpCenter + new Vector3 (x, y, 0.0f);
+			float minY = 0.0f;
+			if(isUp)
+			{
+				if(currentSpeed < maxSpeed/2)
+				{
+					minY = startPos.y - currentSpeed/100 + (transform.position.x - startPos.x)/5;
+					Debug.Log (1);
+				}
+				else
+				{
+					minY = startPos.y + currentSpeed/100 + (transform.position.x - startPos.x)/5;
+					Debug.Log (2);
+				}
+				
+				if (transform.position.y < minY) {
+					isJump = false;
+					currentSpeed = 10;
+					isUp = false;
+					Debug.Log (3);
+				}
+			}
+		} else {
+			if (isRun) {
+				if (currentSpeed < maxSpeed)
 					currentSpeed += 1.5f;
 			}
+			else
+			{
+				currentSpeed -= 1;
+			}
 			if (currentSpeed > 0) {
-				currentSpeed --;
+				
 				GetComponent<Rigidbody2D> ().AddForce (gameObject.transform.up * currentSpeed * Time.deltaTime * 30);
 				_animator.Play (Animator.StringToHash ("skeletonWalk"));
 			} else {
 				_animator.Play (Animator.StringToHash ("skeletonStand"));
 			}
-			if(currentSpeed == 0)
-			{
+			if (currentSpeed == 0) {
 				rotateSpeed = 1;
-			}
-			else
-			{
-				rotateSpeed = currentSpeed;
+			} else {
+				//rotateSpeed = currentSpeed;
 			}
 			if (isRight) {
-				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
+				transform.Rotate ((Vector3.forward * -rotation * Mathf.Sqrt (20)) * Time.deltaTime);
 			} else if (isLeft) {
-				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (rotateSpeed / 2)) * Time.deltaTime);
+				transform.Rotate ((Vector3.forward * rotation * Mathf.Sqrt (20)) * Time.deltaTime);
 				
 			}
-		} else {
-			if (isJumb) {
-				isJumb = false;
-				
-			}
-			
 		}
 	}
 	
@@ -92,14 +124,15 @@ public class PlayerControl : MonoBehaviour {
 	
 	private bool jumping = false;
 	private float jumpStartVelocityY;
-	private float currentJumpWidth = 0;
+	
 	void OnTriggerEnter2D(Collider2D col) {
-		if (!isJumb) {
+		if (!isJump) {
 			if (col.name == "Slope01") {
-				currentJumpHeight = transform.position.y;
-				currentJumpWidth = transform.position.x;
-				Vector3 forwardAndLeft = (transform.eulerAngles + transform.right) * jumpDistance * currentSpeed / 5f; 
-				StartCoroutine(Jump(forwardAndLeft));
+				//Vector3 forwardAndLeft = (transform.up + transform.right); 
+				//StartCoroutine(Jump(forwardAndLeft));
+				jumpCenter = transform.position;
+				startPos = transform.position;
+				isJump = true;
 			} else if(col.name == "Slope02") {
 				//DoJump (bound02, new Vector3(2f, 4f, 0));
 			}
@@ -108,8 +141,18 @@ public class PlayerControl : MonoBehaviour {
 		
 	}
 	
+	void OnTriggerStay2D(Collider2D col) {
+		if(col.name == "MaxSpeedBig") {
+			currentSpeed += 2.2f;
+			Debug.Log(currentSpeed);
+		} else if(col.name == "MaxSpeedSmall") {
+			currentSpeed += 1f;
+			Debug.Log(currentSpeed);
+		}
+	}
+	
 	void DoJump (GameObject[] bound, Vector3 jumpVel) {
-		isJumb = true;
+		isJump = true;
 		isDrive = false;
 		setTriggerBound(bound, true);
 		
@@ -130,8 +173,8 @@ public class PlayerControl : MonoBehaviour {
 		float jumpProgress = 0;
 		float velocityY = jumpStartVelocityY;
 		float height = startPoint.y;
-
-
+		
+		
 		while (jumping)
 		{
 			jumpProgress = time / jumpDuration;
@@ -143,42 +186,30 @@ public class PlayerControl : MonoBehaviour {
 			}
 			
 			Vector3 currentPos = Vector3.Lerp(startPoint, targetPoint, jumpProgress);
-
+			
 			currentPos.y = height;
-			//currentPos.x += speed * 10f * Time.deltaTime;
 			currentPos.z = 21.4f;
 			transform.position = currentPos;
 			
 			//Wait until next frame.
 			yield return null;
 			
-			height += velocityY * Time.deltaTime * (currentSpeed / 2.0f);
+			height += velocityY * Time.deltaTime * (currentSpeed / marginY);
 			velocityY += Time.deltaTime * Physics.gravity.y;
 			time += Time.deltaTime;
 		}
 		targetPoint.z = 21.4f;
-		float maxHeight = startPoint.y + (Mathf.Tan (Mathf.PI / 9) * (targetPoint.x - startPoint.x));
+		float maxHeight = startPoint.y + (Mathf.Tan (Mathf.PI / rad) * (targetPoint.x - startPoint.x));
 		if(targetPoint.y < maxHeight)
-		//if(targetPoint.y < currentJumpHeight)
+			//if(targetPoint.y < currentJumpHeight)
 			targetPoint = new Vector3(targetPoint.x, maxHeight, targetPoint.z);
-		transform.position = targetPoint;
+		//transform.position = targetPoint;
+		StartCoroutine (setJumb (targetPoint));
 		yield break;
 	}
 	
-	//IEnumerator Jumping() {
-	/*startPos = transform.position; //Set the start
-		weight += Time.deltaTime * speed; //amount
-		targetPos = new Vector3(startPos.x + 3f, startPos.y, startPos.z);
-		transform.position = Vector3.Lerp(startPos, 
-		                                  targetPos, weight);
-		yield return new WaitForSeconds (Mathf.Sqrt(speed / 500f));
-		//rigidbody2D.gravityScale = 0;
-		isDrive = true;
-		switch (currentSlope) {
-			case "Slope01" :
-
-				setTriggerBound(bound01, false);
-				break;
-		}*/
-	//}
+	IEnumerator setJumb(Vector3 targetPoint) {
+		yield return new WaitForSeconds (0.016f);
+		transform.position = targetPoint;
+	}
 }
